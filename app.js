@@ -2,6 +2,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+const Restaurant = require('./models/restaurant')
 const restaurantList = require('./restaurant.json')
 
 //constant value
