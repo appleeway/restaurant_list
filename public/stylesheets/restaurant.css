@@ -78,6 +78,15 @@ header {
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.custom-container-width {
+   width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 950px; 
+}
+
 @media screen and (max-width: 992px) {
   
   .card img{
