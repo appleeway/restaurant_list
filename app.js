@@ -28,11 +28,11 @@ app.set('view engine', 'handlebars')
 //setting static files
 app.use(express.static('public'))
 
-//routes setting
+//餐廳首頁
 app.get('/', (req, res) => {
   res.render('index', { restaurants: restaurantList.results })
 })
-
+//餐廳搜尋
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
   const restaurants = restaurantList.results.filter(restaurant => {
@@ -40,10 +40,34 @@ app.get('/search', (req, res) => {
   })
   res.render('index', { restaurants, keyword })
 })
-
+//新增一筆餐廳頁面
+app.get('/restaurants/new', (req, res) => {
+  res.send('新增餐廳頁面')
+})
+//新增一筆餐廳資料
+app.post('restaurants', (req, res) => {
+  res.send('新增餐廳資訊')
+})
+//顯示所有餐廳資訊
+app.get('/restaurants', (req, res) => {
+  return res.redirect('/')
+})
+//顯示特定餐廳詳細資訊
 app.get('/restaurants/:id', (req, res) => {
   const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.id)
   res.render('show', { restaurant })
+})
+//修改一筆餐廳頁面
+app.get('/restaurants/:id/edit', (req, res) => {
+  res.send('修改餐廳資訊表單頁面')
+})
+//修改一筆餐廳資訊
+app.post('/restaurants/:id/edit', (req, res) => {
+  res.send('修改一筆餐廳')
+})
+//刪除一筆餐廳
+app.post('/restaurants/:id/delete', (req, res) => {
+  res.send('刪除一筆餐廳')
 })
 
 app.listen(port, () => {
