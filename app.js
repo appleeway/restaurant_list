@@ -2,6 +2,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 const Restaurant = require('./models/restaurant')
 const restaurantList = require('./restaurant.json')
 
@@ -20,6 +21,9 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('mongodb connected!')
 })
+
+//setting body-parser
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //setting express-handlebars here
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -47,11 +51,27 @@ app.get('/search', (req, res) => {
 })
 //新增一筆餐廳頁面
 app.get('/restaurants/new', (req, res) => {
-  res.send('新增餐廳頁面')
+  res.render('new')
 })
 //新增一筆餐廳資料
-app.post('restaurants', (req, res) => {
-  res.send('新增餐廳資訊')
+app.post('/restaurants', (req, res) => {
+  const inputData = req.body
+  const restaurant = new Restaurant({
+    name: inputData.name,
+    name_en: inputData.name_en,
+    category: inputData.category,
+    image: inputData.image,
+    location: inputData.location,
+    phone: inputData.phone,
+    google_map: inputData.google_map,
+    rating: inputData.rating,
+    description: inputData.description
+
+  })
+  restaurant.save(err => {
+    if (err) return console.error(err)
+    return res.redirect('/')
+  })
 })
 //顯示所有餐廳資訊
 app.get('/restaurants', (req, res) => {
