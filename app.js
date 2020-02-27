@@ -4,7 +4,7 @@ const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const Restaurant = require('./models/restaurant')
-const restaurantList = require('./restaurant.json')
+
 
 //constant value
 const app = express()
@@ -44,11 +44,14 @@ app.get('/', (req, res) => {
 //餐廳搜尋
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
-  const restaurants = restaurantList.results.filter(restaurant => {
-    return restaurant.name.includes(keyword) || restaurant.category.includes(keyword) || restaurant.name.toLowerCase().includes(keyword.toLowerCase())
-  })
-  res.render('index', { restaurants, keyword })
+  Restaurant.find({ $or: [{ name: { $regex: keyword } }, { category: { $regex: keyword } }, { name_en: { $regex: keyword, $options: 'i' } }] })
+    .lean()
+    .exec((err, restaurants) => {
+      if (err) return console.error(err)
+      res.render('index', { restaurants, keyword })
+    })
 })
+
 //新增一筆餐廳頁面
 app.get('/restaurants/new', (req, res) => {
   res.render('new')
