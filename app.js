@@ -66,7 +66,6 @@ app.post('/restaurants', (req, res) => {
     google_map: inputData.google_map,
     rating: inputData.rating,
     description: inputData.description
-
   })
   restaurant.save(err => {
     if (err) return console.error(err)
@@ -79,8 +78,12 @@ app.get('/restaurants', (req, res) => {
 })
 //顯示特定餐廳詳細資訊
 app.get('/restaurants/:id', (req, res) => {
-  const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.id)
-  res.render('show', { restaurant })
+  Restaurant.findById(req.params.id)
+    .lean()
+    .exec((err, restaurant) => {
+      if (err) return console.error(err)
+      return res.render('show', { restaurant })
+    })
 })
 //修改一筆餐廳頁面
 app.get('/restaurants/:id/edit', (req, res) => {
