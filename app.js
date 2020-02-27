@@ -30,7 +30,12 @@ app.use(express.static('public'))
 
 //餐廳首頁
 app.get('/', (req, res) => {
-  res.render('index', { restaurants: restaurantList.results })
+  Restaurant.find()
+    .lean()
+    .exec((err, restaurants) => {
+      if (err) return console.error(err)
+      res.render('index', { restaurants })
+    })
 })
 //餐廳搜尋
 app.get('/search', (req, res) => {
