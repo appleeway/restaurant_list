@@ -3,6 +3,7 @@
 
 ## Features - 網站功能
 - 搜尋 : 可藉由餐廳名字或是類別尋找喜愛餐廳
+- 排序 : 可由評分高低排序
 - 詳細資訊 : 點擊照片後，可以看到詳細資訊如：地址、聯絡方式、餐廳介紹。
 - 建立清單 : 可以建立自己喜愛的餐廳，並且及時修改資訊
 
@@ -12,6 +13,7 @@
 - express-handlebars
 - body-parser
 - mongoose
+- method-override
 
 ## Contributor - 專案開發人員
 > [Wei Lee](https://github.com/appleeway)
