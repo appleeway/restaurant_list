@@ -44,7 +44,7 @@
               </span>
               <a href="/restaurants/{{{this._id}}}" class="btn btn-secondary" role="button">Detail</a>
               <a href="/restaurants/{{{this._id}}}/edit" class="btn btn-secondary" role="button">Edit</a>
-              <form action="/restaurants/{{{this._id}}}/delete" method="POST" style="display: inline;"
+              <form action="/restaurants/{{{this._id}}}?_method=DELETE" method="POST" style="display: inline;"
                 onsubmit="javascript:return window.confirm('確定要刪除嗎？')">
                 <button type="submit" class="btn btn-secondary">Delete</button>
               </form>

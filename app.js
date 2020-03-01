@@ -3,6 +3,7 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 const Restaurant = require('./models/restaurant')
 
 
@@ -21,6 +22,8 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('mongodb connected!')
 })
+//setting method_override
+app.use(methodOverride('_method'))
 
 //setting body-parser
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -98,7 +101,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
     })
 })
 //修改一筆餐廳資訊
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if (err) return console.error(err)
     restaurant.name = req.body.name,
@@ -117,7 +120,7 @@ app.post('/restaurants/:id/edit', (req, res) => {
   })
 })
 //刪除一筆餐廳
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if (err) return console.error(err)
     restaurant.remove(err => {
