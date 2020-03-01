@@ -22,5 +22,15 @@ router.get('/search', (req, res) => {
       res.render('index', { restaurants, keyword })
     })
 })
+//餐廳排序
+router.get('/sort', (req, res) => {
+  Restaurant.find()
+    .sort({ rating: 'desc' })
+    .lean()
+    .exec((err, restaurants) => {
+      if (err) return console.error(err)
+      res.render('index', { restaurants })
+    })
+})
 
 module.exports = router
