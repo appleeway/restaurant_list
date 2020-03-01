@@ -6,7 +6,8 @@
       <a href="/" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Back</a>
       <a href="/restaurants/{{restaurant._id}}/edit" class="btn btn-secondary btn-lg active" role="button"
         aria-pressed="true">Edit</a>
-      <form action="/restaurants/{{{restaurant._id}}}/delete" method="POST" style="display: inline;">
+      <form action="/restaurants/{{{restaurant._id}}}/delete" method="POST" style="display: inline;"
+        onsubmit="javascript:return window.confirm('確定要刪除嗎？')">
         <button type="submit" class="btn btn-secondary btn-lg active">Delete</button>
       </form>
       <p class="mb-1 mt-3">
