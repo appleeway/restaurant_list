@@ -4,7 +4,7 @@ const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
-
+const session = require('express-session')
 
 //constant value
 const app = express()
@@ -33,6 +33,13 @@ app.set('view engine', 'handlebars')
 
 //setting static files
 app.use(express.static('public'))
+
+//setting sesssion
+app.use(session({
+  secret: 'hot cat',
+  resave: false,
+  saveUninitialized: true
+}))
 
 //setting routes
 app.use('/', require('./routes/home'))
