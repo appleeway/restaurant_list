@@ -10,17 +10,17 @@ router.get('/new', (req, res) => {
 })
 //新增一筆餐廳資料
 router.post('/', (req, res) => {
-  const inputData = req.body
+  const { name, name_en, category, image, location, phone, google_map, rating, description } = req.body
   const restaurant = new Restaurant({
-    name: inputData.name,
-    name_en: inputData.name_en,
-    category: inputData.category,
-    image: inputData.image,
-    location: inputData.location,
-    phone: inputData.phone,
-    google_map: inputData.google_map,
-    rating: inputData.rating,
-    description: inputData.description
+    name,
+    name_en,
+    category,
+    image,
+    location,
+    phone,
+    google_map,
+    rating,
+    description
   })
   restaurant.save(err => {
     if (err) return console.error(err)
