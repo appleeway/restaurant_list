@@ -36,9 +36,8 @@ app.use(express.static('public'))
 
 //setting routes
 app.use('/', require('./routes/home'))
-
 app.use('/restaurants', require('./routes/restaurant'))
-
+app.use('/users', require('./routes/users'))
 
 app.listen(port, () => {
   console.log(`Express is listening on localhost:${port}`)
