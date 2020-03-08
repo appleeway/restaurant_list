@@ -3,8 +3,12 @@ const express = require('express')
 const router = express.Router()
 const Restaurant = require('../models/restaurant')
 
+// 載入 auth middleware 裡的 authenticated 方法
+const { authenticated } = require('../config/auth')
+
+// 加入 authenticated 驗證
 // 餐廳首頁
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
   Restaurant.find()
     .lean()
     .exec((err, restaurants) => {
@@ -13,7 +17,7 @@ router.get('/', (req, res) => {
     })
 })
 //餐廳搜尋
-router.get('/search', (req, res) => {
+router.get('/search', authenticated, (req, res) => {
   const keyword = req.query.keyword
   Restaurant.find({ $or: [{ name: { $regex: keyword } }, { category: { $regex: keyword } }, { name_en: { $regex: keyword, $options: 'i' } }] })
     .lean()
@@ -23,7 +27,7 @@ router.get('/search', (req, res) => {
     })
 })
 //餐廳排序
-router.get('/sort', (req, res) => {
+router.get('/sort', authenticated, (req, res) => {
   Restaurant.find()
     .sort({ rating: 'desc' })
     .lean()

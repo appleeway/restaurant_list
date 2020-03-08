@@ -6,6 +6,8 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('passport')
+//載入Passport config
+require('./config/passport')(passport)
 
 //constant value
 const app = express()
@@ -35,24 +37,24 @@ app.set('view engine', 'handlebars')
 //setting static files
 app.use(express.static('public'))
 
-//using Passport
-app.use(passport.initialize())
-app.use(passport.session())
-
-//載入Passport config
-require('./config/passport')(passport)
-//登入後可以取得使用者的資訊方便我們在view裡面使用
-app.use((req, res, next) => {
-  res.locals.user = req.user
-  next()
-})
-
 //setting sesssion
 app.use(session({
   secret: 'hot cat',
   resave: false,
   saveUninitialized: true
 }))
+
+//using Passport
+app.use(passport.initialize())
+app.use(passport.session())
+
+
+//登入後可以取得使用者的資訊方便我們在view裡面使用
+app.use((req, res, next) => {
+  res.locals.user = req.user
+  next()
+})
+
 
 //setting routes
 app.use('/', require('./routes/home'))
