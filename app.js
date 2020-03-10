@@ -14,7 +14,7 @@ const app = express()
 const port = 3000
 
 //setting mongodb
-mongoose.connect('mongodb://localhost/restaurant', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost/restaurant', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 const db = mongoose.connection
 //連線異常
 db.on('error', () => {
