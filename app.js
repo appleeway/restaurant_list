@@ -52,6 +52,7 @@ app.use(passport.session())
 //登入後可以取得使用者的資訊方便我們在view裡面使用
 app.use((req, res, next) => {
   res.locals.user = req.user
+  res.locals.isAuthenticated = req.isAuthenticated()
   next()
 })
 
