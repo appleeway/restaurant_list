@@ -19,7 +19,12 @@ router.get('/', authenticated, (req, res) => {
 //餐廳搜尋
 router.get('/search', authenticated, (req, res) => {
   const keyword = req.query.keyword
-  Restaurant.find({ $or: [{ name: { $regex: keyword } }, { category: { $regex: keyword } }, { name_en: { $regex: keyword, $options: 'i' } }] })
+  Restaurant.find({
+    $and: [
+      { userId: req.user._id },
+      { $or: [{ name: { $regex: keyword } }, { category: { $regex: keyword } }, { name_en: { $regex: keyword, $options: 'i' } }] }
+    ]
+  })
     .lean()
     .exec((err, restaurants) => {
       if (err) return console.error(err)
@@ -28,7 +33,7 @@ router.get('/search', authenticated, (req, res) => {
 })
 //餐廳排序
 router.get('/sort', authenticated, (req, res) => {
-  Restaurant.find()
+  Restaurant.find({ userId: req.user._id })
     .sort({ rating: 'desc' })
     .lean()
     .exec((err, restaurants) => {
