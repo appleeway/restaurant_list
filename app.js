@@ -6,12 +6,18 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('passport')
-//載入Passport config
-require('./config/passport')(passport)
 
 //constant value
 const app = express()
 const port = 3000
+
+// 判別開發環境
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
+//載入Passport config
+require('./config/passport')(passport)
 
 //setting mongodb
 mongoose.connect('mongodb://localhost/restaurant', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
@@ -57,10 +63,12 @@ app.use((req, res, next) => {
 })
 
 
+
 //setting routes
 app.use('/', require('./routes/home'))
 app.use('/restaurants', require('./routes/restaurant'))
 app.use('/users', require('./routes/user'))
+app.use('/auth', require('./routes/auths'))
 
 app.listen(port, () => {
   console.log(`Express is listening on localhost:${port}`)
