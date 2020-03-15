@@ -55,7 +55,8 @@ router.get('/:id/edit', authenticated, (req, res) => {
 router.put('/:id', authenticated, (req, res) => {
   Restaurant.findById({ _id: req.params.id, userId: req.user._id }, (err, restaurant) => {
     if (err) return console.error(err)
-    const { name, name_en, category, image, location, phone, google_map, rating, description } = req.body
+
+    Object.assign(restaurant, req.body)
 
     restaurant.save(err => {
       if (err) return console.error(err)
